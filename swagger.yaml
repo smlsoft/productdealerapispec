@@ -7,37 +7,42 @@ info:
     email: toe@smlsoft.com
 tags:
   - name: product
-  - name: dealer  
+  - name: dealer
+  - name: product dealer
 paths:
   /product:
     post:
       tags:
         - product
-      summary: "Add New Product"
+      summary: Add new product
       operationId: addProduct
-      description: "for add product sync to dealer"
+      description: for add product to sync to dealer
       requestBody:
         $ref: "#/components/requestBodies/Product"
       responses:
         "200":
           description: "Success"
         "400":
-          description: "Bad Request"
+          description: "Bad request"
+      security:
+        - bearer_token: []
     get:
       tags:
         - product
-      summary: "List Product"
-      description: List Product
+      summary: "List product."
+      description: for list product in system
       operationId: listProduct
       responses:
         "200":
-          description: List of user object
+          description: List of product object
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: "#/components/schemas/Product"
+      security:
+        - bearer_token: []
   /product/{code}:
     get:
       tags:
@@ -49,12 +54,20 @@ paths:
           required: true
           schema:
             type: string
-      summary: "Get Product"
+      summary: "Get product information by product code"
       operationId: getProduct
-      description: "for add product sync to dealer"
+      description: "get product information by code"
       responses:
         "200":
           description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        "400":
+          description: "Bad request"
+      security:
+        - bearer_token: []          
     put:
       tags:
         - product
@@ -66,12 +79,18 @@ paths:
           schema:
             type: integer
             format: int64
-      summary: "Edit Product"
-      operationId: putProduct
-      description: "for add product sync to dealer"
+      summary: "Update an existing product"
+      operationId: updateProduct
+      description: "for update product sync to dealer"
+      requestBody:
+        $ref: "#/components/requestBodies/Product"
       responses:
         "200":
           description: "Success"
+        "400":
+          description: "Bad request"
+      security:
+        - bearer_token: []          
     delete:
       parameters:
         - name: code
@@ -83,73 +102,151 @@ paths:
             format: int64
       tags:
         - product
-      summary: "Remove Product"
+      summary: "Remove product"
       operationId: deleteProduct
-      description: "for add product sync to dealer"
+      description: "for delete product sync to dealer"
       responses:
         "200":
           description: "Success"
+        "400":
+          description: "Bad request"
+      security:
+        - bearer_token: []          
   /dealer:
     post:
       tags:
         - dealer
+      summary: Create new dealer
       operationId: addDealer
-      description: "for add product sync to dealer"
+      description: "for add new dealer"
       requestBody:
         $ref: '#/components/requestBodies/Dealer'
       responses:
         "200":
           description: "Success"
         "400":
-          description: "Bad Request"
-  /dealer/{code}:
+          description: "Bad request"
+      security:
+        - bearer_token: []          
     get:
       tags:
         - dealer
       operationId: listDealer
-      description: "for add product sync to dealer"
+      summary: List dealer
+      description: "for list all dealer."
+      requestBody:
+        $ref: '#/components/requestBodies/Dealer'
       responses:
         "200":
           description: "Success"
+        "400":
+          description: "Bad request"
+      security:
+        - bearer_token: []          
+  /dealer/{code}:
+    get:
+      tags:
+        - dealer
+      operationId: getDealer
+      summary: Get dealer by code.
+      description: "for get dealer by dealer code."
+      parameters:
+        - name: code
+          in: path
+          description: code of dealer to return
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "Success"
+        "400":
+          description: "Bad request"
+      security:
+        - bearer_token: []          
     put:
       tags:
         - dealer
-      operationId: editDealer
+      operationId: updateDealer
+      summary: Update an existing dealer
       description: "for add product sync to dealer"
+      parameters:
+        - name: code
+          in: path
+          description: code of product to update
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: "Success"
+        "400":
+          description: "Bad request"
+      security:
+        - bearer_token: []          
     delete:
       tags:
         - dealer
       operationId: deleteDealer
+      summary: Delete a dealer
       description: "for add product sync to dealer"
+      parameters:
+        - name: code
+          in: path
+          description: code of dealer to delete
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: "Success"
+        "400":
+          description: "Bad request"
+      security:
+        - bearer_token: []          
+  /productdealer:
+    put:
+      tags:
+        - product dealer
+      operationId: setProductDealer
+      summary: Set product for dealer
+      description: set a product for dealer
+      requestBody:
+        $ref: '#/components/requestBodies/ProductDealer'
+      responses:
+        "200":
+          description: "Success"
+        "400":
+          description: "Bad request"
+      security:
+        - bearer_token: []      
 servers:
-  - url: api.com
+  - url: api.domain.com
 components:
-  requestBodies:    
+  requestBodies:
     Product:
-       content:
+      content:
          application/json:
           schema:
             $ref: "#/components/schemas/Product"
+          example:
+            code: "IC0001"
+            name_1: "Product Name 1"
+            unit_cost: "PCS"
+            item_type: 0
+            tax_type: 0              
     Dealer:
-       content:
+      content:
          application/json:
           schema:
             $ref: "#/components/schemas/Dealer"
-  responses:
-    ProductArray:
+    ProductDealer:
       content:
         application/json:
           schema:
             type: array
             items:
-              $ref: "#/components/schemas/Product"
-      description: List of user object    
+              $ref: "#/components/schemas/ProductDealer"
   schemas:   
     ApiResponse:
       type: object
@@ -157,8 +254,6 @@ components:
         code:
           type: integer
           format: int32
-        type:
-          type: string
         message:
           type: string
     Product:
@@ -372,4 +467,29 @@ components:
           type: string
           maxLength: 25
           description: ขนาดสินค้า
-      
+    ProductDealer:
+      type: object
+      properties:
+        productcode:
+          type: string
+          maxLength: 25
+        dealers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductDealerSync'
+    ProductDealerSync:
+      type: object
+      properties:
+        dealercode:
+          type: string
+        is_sync:
+          type: boolean
+  securitySchemes:
+    bearer_token:      
+      type: http
+      scheme: bearer      
+      bearerFormat: Bearer <token>
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header
