@@ -22,6 +22,10 @@ paths:
       responses:
         "200":
           description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
         "400":
           description: "Bad request"
       security:
@@ -38,9 +42,17 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Product"
+                type: object
+                allOf:
+                   - $ref: "#/components/schemas/Product"
+                properties:
+                  dealers:
+                    type: array
+                    description: ผู้แทนจำหน่าย
+                    items:
+                      $ref: "#/components/schemas/ProductDealerSync"
+        "401":
+          $ref: "#/components/responses/401"
       security:
         - bearer_token: []
   /product/{code}:
@@ -228,13 +240,31 @@ components:
       content:
          application/json:
           schema:
-            $ref: "#/components/schemas/Product"
+            type: object
+            allOf:
+               - $ref: "#/components/schemas/Product"
+            properties:
+              dealers:
+                type: array
+                description: ผู้แทนจำหน่าย
+                items:
+                  $ref: "#/components/schemas/ProductDealerSync"
           example:
-            code: "IC0001"
-            name_1: "Product Name 1"
-            unit_cost: "PCS"
-            item_type: 0
-            tax_type: 0              
+           code: "IC0001"
+           name_1: "Product Name 1"
+           unit_cost: "PCS"
+           item_type: 0
+           tax_type: 0
+           units:
+             - code: "PCS"
+               stand_value: 1
+               divide_value: 1
+               ratio: 1
+               row_order: 0
+               line_number: 0
+           dealers:
+             - dealercode: "204900001"
+               issync: true
     Dealer:
       content:
          application/json:
@@ -247,7 +277,15 @@ components:
             type: array
             items:
               $ref: "#/components/schemas/ProductDealer"
-  schemas:   
+  responses:
+    '401':
+      description: Unauthorize
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"     
+      
+  schemas:
     ApiResponse:
       type: object
       properties:
@@ -412,7 +450,7 @@ components:
         weight:
           type: string
           description: น้ำหนัก
-          example: 200 g."
+          example: 200 g.
         status:
           type: integer
           description: สถานะ
@@ -473,6 +511,7 @@ components:
         productcode:
           type: string
           maxLength: 25
+          description: รหัสสินค้า
         dealers:
           type: array
           items:
@@ -482,8 +521,11 @@ components:
       properties:
         dealercode:
           type: string
-        is_sync:
+          maxLength: 25
+          description: รหัสตัวแทนจำหน่าย
+        issync:
           type: boolean
+          description: อนุญาติให้ใช้งาน
   securitySchemes:
     bearer_token:      
       type: http
@@ -493,3 +535,4 @@ components:
       type: apiKey
       name: x-api-key
       in: header
+        
