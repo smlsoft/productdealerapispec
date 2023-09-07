@@ -10,6 +10,7 @@ tags:
   - name: Dealer
   - name: Product Dealer
   - name: Transaction
+    description: Sync transaction from SMLAccount
 servers:
   - url: api.domain.com
 paths:
@@ -241,7 +242,7 @@ paths:
         - Transaction
       operationId: syncSaleInvoice
       summary: Sync sale invoice(SI)
-      description: Sync sale invoice from SMLAccount
+      description: Sync sale invoice(SI)
       requestBody:
         $ref: '#/components/requestBodies/SaleInvoice'
       responses:
@@ -255,7 +256,7 @@ paths:
         - Transaction
       operationId: syncSaleCreditNote
       summary: Sync sale credit note(CN)
-      description: Sync sale credit note from SMLAccount
+      description: Sync sale credit note(CN))
       requestBody:
         $ref: '#/components/requestBodies/SaleCreditNote'
       responses:
@@ -269,7 +270,7 @@ paths:
         - Transaction
       operationId: syncSaleDebitNote
       summary: Sync sale debit note(DN)
-      description: Sync sale debit note from SMLAccount
+      description: Sync sale debit note(DN)
       requestBody:
         $ref: '#/components/requestBodies/SaleDebitNote'
       responses:
@@ -283,7 +284,7 @@ paths:
         - Transaction
       operationId: syncPurchaseInvoice
       summary: Sync purchase invoice(PU)
-      description: Sync purchase invoice from SMLAccount
+      description: Sync purchase invoice(PU)
       requestBody:
         $ref: '#/components/requestBodies/PurchaseInvoice'
       responses:
@@ -297,7 +298,7 @@ paths:
         - Transaction
       operationId: syncPurchaseCreditNote
       summary: Sync purchase credit note
-      description: Sync purchase credit note from SMLAccount
+      description: Sync purchase credit note
       requestBody:
         $ref: '#/components/requestBodies/PurchaseCreditNote'
       responses:
@@ -311,7 +312,7 @@ paths:
         - Transaction
       operationId: syncPurchaseDebitNote
       summary: Sync purchase debit note
-      description: Sync purchase debit note from SMLAccount
+      description: Sync purchase debit note
       requestBody:
         $ref: '#/components/requestBodies/PurchaseDebitNote'
       responses:
@@ -325,7 +326,7 @@ paths:
         - Transaction
       operationId: syncPurchaseOrder
       summary: Sync purchase order(PO)
-      description: Sync purchase order(PO) from SMLAccount
+      description: Sync purchase order(PO)
       requestBody:
         $ref: '#/components/requestBodies/PurchaseOrder'
       responses:
