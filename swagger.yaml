@@ -6,14 +6,17 @@ info:
   contact:
     email: toe@smlsoft.com
 tags:
-  - name: product
-  - name: dealer
-  - name: product dealer
+  - name: Product
+  - name: Dealer
+  - name: Product Dealer
+  - name: Transaction
+servers:
+  - url: api.domain.com
 paths:
   /product:
     post:
       tags:
-        - product
+        - Product
       summary: Add new product
       operationId: addProduct
       description: for add product to sync to dealer
@@ -32,7 +35,7 @@ paths:
         - bearer_token: []
     get:
       tags:
-        - product
+        - Product
       summary: "List product."
       description: for list product in system
       operationId: listProduct
@@ -58,7 +61,7 @@ paths:
   /product/{code}:
     get:
       tags:
-        - product
+        - Product
       parameters:
         - name: code
           in: path
@@ -82,7 +85,7 @@ paths:
         - bearer_token: []          
     put:
       tags:
-        - product
+        - Product
       parameters:
         - name: code
           in: path
@@ -113,7 +116,7 @@ paths:
             type: integer
             format: int64
       tags:
-        - product
+        - Product
       summary: "Remove product"
       operationId: deleteProduct
       description: "for delete product sync to dealer"
@@ -127,7 +130,7 @@ paths:
   /dealer:
     post:
       tags:
-        - dealer
+        - Dealer
       summary: Create new dealer
       operationId: addDealer
       description: "for add new dealer"
@@ -142,7 +145,7 @@ paths:
         - bearer_token: []          
     get:
       tags:
-        - dealer
+        - Dealer
       operationId: listDealer
       summary: List dealer
       description: "for list all dealer."
@@ -158,7 +161,7 @@ paths:
   /dealer/{code}:
     get:
       tags:
-        - dealer
+        - Dealer
       operationId: getDealer
       summary: Get dealer by code.
       description: "for get dealer by dealer code."
@@ -178,7 +181,7 @@ paths:
         - bearer_token: []          
     put:
       tags:
-        - dealer
+        - Dealer
       operationId: updateDealer
       summary: Update an existing dealer
       description: "for add product sync to dealer"
@@ -198,7 +201,7 @@ paths:
         - bearer_token: []          
     delete:
       tags:
-        - dealer
+        - Dealer
       operationId: deleteDealer
       summary: Delete a dealer
       description: "for add product sync to dealer"
@@ -219,7 +222,7 @@ paths:
   /productdealer:
     put:
       tags:
-        - product dealer
+        - Product Dealer
       operationId: setProductDealer
       summary: Set product for dealer
       description: set a product for dealer
@@ -232,8 +235,97 @@ paths:
           description: "Bad request"
       security:
         - bearer_token: []      
-servers:
-  - url: api.domain.com
+  /saleinvoice:
+    post:
+      tags:
+        - Transaction
+      operationId: syncSaleInvoice
+      summary: Sync sale invoice from SMLAccount
+      requestBody:
+        $ref: '#/components/requestBodies/SaleInvoice'
+      responses:
+        "201":
+          $ref: "#/components/responses/201"
+        "400":
+          $ref: "#/components/responses/400"
+  /salecreditnote:
+    post:
+      tags:
+        - Transaction
+      operationId: syncSaleCreditNote
+      summary: Sync sale credit note from SMLAccount
+      requestBody:
+        $ref: '#/components/requestBodies/SaleCreditNote'
+      responses:
+        "201":
+          $ref: "#/components/responses/201"
+        "400":
+          $ref: "#/components/responses/400"
+  /saledebitnote:
+    post:
+      tags:
+        - Transaction
+      operationId: syncSaleDebitNote
+      summary: Sync sale debit note from SMLAccount
+      requestBody:
+        $ref: '#/components/requestBodies/SaleDebitNote'
+      responses:
+        "201":
+          $ref: "#/components/responses/201"
+        "400":
+          $ref: "#/components/responses/400"
+  /purchaseinvoice:
+    post:
+      tags:
+        - Transaction
+      operationId: syncPurchaseInvoice
+      summary: Sync purchase invoice from SMLAccount
+      requestBody:
+        $ref: '#/components/requestBodies/PurchaseInvoice'
+      responses:
+        "201":
+          $ref: "#/components/responses/201"
+        "400":
+          $ref: "#/components/responses/400"
+  /purchasecreditnote:
+    post:
+      tags:
+        - Transaction
+      operationId: syncPurchaseCreditNote
+      summary: Sync purchase credit note from SMLAccount
+      requestBody:
+        $ref: '#/components/requestBodies/PurchaseCreditNote'
+      responses:
+        "201":
+          $ref: "#/components/responses/201"
+        "400":
+          $ref: "#/components/responses/400"
+  /purchasedebitnote:
+    post:
+      tags:
+        - Transaction
+      operationId: syncPurchaseDebitNote
+      summary: Sync purchase debit note from SMLAccount
+      requestBody:
+        $ref: '#/components/requestBodies/PurchaseDebitNote'
+      responses:
+        "201":
+          $ref: "#/components/responses/201"
+        "400":
+          $ref: "#/components/responses/400"
+  /purchaseorder:
+    post:
+      tags:
+        - Transaction
+      operationId: syncPurchaseOrder
+      summary: Sync purchase order from SMLAccount
+      requestBody:
+        $ref: '#/components/requestBodies/PurchaseOrder'
+      responses:
+        "201":
+          $ref: "#/components/responses/201"
+        "400":
+          $ref: "#/components/responses/400"
 components:
   requestBodies:
     Product:
@@ -277,14 +369,79 @@ components:
             type: array
             items:
               $ref: "#/components/schemas/ProductDealer"
+    SaleInvoice:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/TransactionWithPayment"
+    SaleCreditNote:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/TransactionWithPayment"
+    SaleDebitNote:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/TransactionWithPayment"
+    PurchaseInvoice:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/TransactionWithPayment"
+    PurchaseCreditNote:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/TransactionWithPayment"
+    PurchaseDebitNote:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/TransactionWithPayment"
+    PurchaseOrder:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Transaction"
   responses:
+    '201':
+      description: Created success
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            message: Created success
+            success: true
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            message: Bad request
+            success: false
     '401':
       description: Unauthorize
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/ApiResponse"     
-      
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            message: Unauthorize
+            success: false
+    '500':
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            code: 99999
+            message: Internal server error
+            success: false
   schemas:
     ApiResponse:
       type: object
@@ -294,6 +451,8 @@ components:
           format: int32
         message:
           type: string
+        success:
+          type: boolean        
     Product:
       type: object
       properties:
@@ -526,6 +685,170 @@ components:
         issync:
           type: boolean
           description: อนุญาติให้ใช้งาน
+    Transaction:
+      type: object
+      properties:
+        dealercode:
+          type: string
+        docno:
+          type: string
+        docdate:
+          type: string
+          format: date
+        doctime:
+          type: string
+          example: "00:00:00"
+        taxdocno:
+          type: string
+        taxdocdate:
+          type: string
+          format: date
+        custcode:
+          type: string
+        custname:
+          type: string
+        saletype:
+          type: integer
+          description: ประเภทการขาย(1=ขายเชื่อ, 1=ขายเงินสด, 2=ขายเชื่อ/สินค้าบริการ , 3=ขายสด/สินค้าบริการ )
+        vattype:
+          type: integer
+          description: ประเภทภาษี(0=ภาษีแยกนอก, 1=ยกเว้นภาษี)
+        varrate:
+          type: number
+        # salecode:
+        #   type: string
+        # salename:
+        #   type: string
+        totalvalue:
+          type: number
+        discountword:
+          type: string
+        totaldiscount:
+          type: number
+        totalbeforevat:
+          type: number
+        totalvatvalue:
+          type: number
+        totalexceptvat:
+          type: number
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionItem'
+    TransactionItem:
+      properties:
+        line_number:
+          type: integer
+        itemcode:
+          type: string
+        itemname:
+          type: string
+        unitcode:
+          type: string
+        unitname:
+          type: string
+        qty:
+          type: number
+        price:
+          type: number
+        discount:
+          type: string
+        discountamount:
+          type: number
+        sumamount:
+          type: number
+        item_tax_type:
+          type: integer
+          description: ประเภทภาษี(0=มีภาษี, 1=ยกเว้นภาษี)
+        sumamountexcludevat:
+          type: number
+        warehouse:
+          type: string
+        warehouse_name:
+          type: string
+        location:
+          type: string
+        location_name:
+          type: string
+    TransactionWithPayment:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Transaction'
+      properties:
+        payment:
+          $ref: '#/components/schemas/Payment'
+    Payment:
+      type: object
+      properties:
+        cashamount:
+          type: number
+        creditcardamount:
+          type: number
+        chequeamount:
+          type: number
+        transferamount:
+          type: number
+        creditcarddetail:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreditCardPayment'
+        transferdetail:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransferPayment'
+        chequqdetail:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChequePayment'
+    CreditCardPayment:
+      type: object
+      properties:
+        cardnumber:
+          type: string
+        approvedcode:
+          type: string
+        creditcardtype:
+          type: string
+        amount:
+          type: number
+        chargeamount:
+          type: number
+        totalamount:
+          type: number
+    TransferPayment:
+      type: object
+      properties:
+        transferdate:
+          type: string
+          format: date
+        bankcode:
+          type: string
+        bankname:
+          type: string
+        bankbranchcode:
+          type: string
+        bankbranchname:
+          type: string
+        amount:
+          type: number
+    ChequePayment:
+      type: object
+      properties:
+        chequeno:
+          type: string
+        chequeduedate:
+          type: string
+          format: date
+        bankcode:
+          type: string
+        bankname:
+          type: string
+        bankbranchcode:
+          type: string
+        bankbranchname:
+          type: string
+        amount:
+          type: number
   securitySchemes:
     bearer_token:      
       type: http
