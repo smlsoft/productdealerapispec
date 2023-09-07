@@ -483,7 +483,10 @@ components:
         unit_cost:
           type: string
           description: รหัสหน่วยนับ(ต้นทุน)
-          maxLength: 25          
+          maxLength: 25
+        price_recommended:
+          type: number
+          description: ราคาขายแนะนำ
         item_category:
           type: string
           description: รหัสหมวดสินค้า
