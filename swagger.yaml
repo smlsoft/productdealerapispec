@@ -381,7 +381,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/TransactionWithPayment"
+            $ref: "#/components/schemas/SaleInvoiceTransaction"
     SaleCreditNote:
       content:
         application/json:
@@ -714,10 +714,7 @@ components:
         custcode:
           type: string
         custname:
-          type: string
-        saletype:
-          type: integer
-          description: ประเภทการขาย(1=ขายเชื่อ, 1=ขายเงินสด, 2=ขายเชื่อ/สินค้าบริการ , 3=ขายสด/สินค้าบริการ )
+          type: string        
         vattype:
           type: integer
           description: ประเภทภาษี(0=ภาษีแยกนอก, 1=ยกเว้นภาษี)
@@ -778,13 +775,6 @@ components:
           type: string
         location_name:
           type: string
-    TransactionWithPayment:
-      type: object
-      allOf:
-        - $ref: '#/components/schemas/Transaction'
-      properties:
-        payment:
-          $ref: '#/components/schemas/Payment'
     Payment:
       type: object
       properties:
@@ -857,6 +847,23 @@ components:
           type: string
         amount:
           type: number
+    SaleInvoiceTransaction:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Transaction'
+      properties:
+        saletype:
+          type: integer
+          description: ประเภทการขาย(1=ขายเชื่อ, 1=ขายเงินสด, 2=ขายเชื่อ/สินค้าบริการ , 3=ขายสด/สินค้าบริการ )
+        payment:
+          $ref: '#/components/schemas/Payment'
+    TransactionWithPayment:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Transaction'
+      properties:
+        payment:
+          $ref: '#/components/schemas/Payment'
   securitySchemes:
     bearer_token:      
       type: http
