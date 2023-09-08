@@ -12,7 +12,15 @@ tags:
   - name: Transaction
     description: Sync transaction from SMLAccount
 servers:
-  - url: api.domain.com
+  - url: '{protocal}://{server}/productdealerapi/v1'
+    variables:
+      protocal:
+        enum:
+          - https
+          - http
+        default: http
+      server:
+        default: demo.smlsoft.com
 paths:
   /product:
     post:
@@ -149,9 +157,7 @@ paths:
         - Dealer
       operationId: listDealer
       summary: List dealer
-      description: "for list all dealer."
-      requestBody:
-        $ref: '#/components/requestBodies/Dealer'
+      description: "for list all dealer."      
       responses:
         "200":
           description: "Success"
@@ -565,6 +571,10 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Barcode"
+        product_image:
+          type: string
+          description: รูปภาพสินค้า
+          maxLength: 255
       required:
         - code
         - name_1
