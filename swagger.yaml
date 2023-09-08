@@ -11,6 +11,7 @@ tags:
   - name: Product Dealer
   - name: Transaction
     description: Sync transaction from SMLAccount
+  - name: Master Sync
 servers:
   - url: '{protocal}://{server}/productdealerapi/v1'
     variables:
@@ -20,7 +21,7 @@ servers:
           - http
         default: http
       server:
-        default: demo.smlsoft.com
+        default: localhost:8888
 paths:
   /product:
     post:
@@ -37,9 +38,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiResponse'
+                $ref: '#/components/schemas/ResponseSuccess'
         "400":
-          description: "Bad request"
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
       security:
         - bearer_token: []
     get:
@@ -63,8 +68,12 @@ paths:
                     description: ผู้แทนจำหน่าย
                     items:
                       $ref: "#/components/schemas/ProductDealerSync"
+        "400":
+          $ref: "#/components/responses/400"
         "401":
           $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
       security:
         - bearer_token: []
   /product/{code}:
@@ -340,6 +349,103 @@ paths:
           $ref: "#/components/responses/201"
         "400":
           $ref: "#/components/responses/400"
+  /master-sync:
+    get:
+      tags:
+        - Master Sync
+      operationId: getMasterSync
+      summary: Get master sync
+      parameters:
+        - name: lastupdate
+          in: query
+          description: code of product to return
+          required: true
+          schema:
+            type: string
+            format: "0000-00-00T00:00:00"
+        - name: action
+          in: query
+          description: action for sync (all, new, remove)
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ResponseSuccess"
+                properties:
+                  data:
+                    $ref: "#/components/schemas/ProductSyncResponse"
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+  /master-sync/status:
+    get:
+      tags:
+        - Master Sync
+      operationId: statusMasterSync
+      summary: Get master sync status
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SyncStatus"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+  /master-sync/list:
+    get:
+      tags:
+        - Master Sync
+      operationId: listMasterSync
+      summary: List master sync
+      parameters:
+        - name: lastupdate
+          in: query
+          description: code of product to return
+          required: true
+          schema:
+            type: string
+            format: "0000-00-00T00:00:00"
+        - name: action
+          in: query
+          description: action for sync (all, new, remove)
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/ResponseSuccess"
+                properties:
+                  data:
+                    $ref: "#/components/schemas/ProductSyncResponse"
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
 components:
   requestBodies:
     Product:
@@ -466,7 +572,56 @@ components:
         message:
           type: string
         success:
-          type: boolean        
+          type: boolean
+    ResponseSuccess:
+      type: object
+      properties:
+        success:
+          type: boolean
+    Pagination:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int64
+        page:
+          type: integer
+          format: int64
+        perpage:
+          type: integer
+          format: int64
+        prev:
+          type: integer
+          format: int64
+        next:
+          type: integer
+          format: int64
+        totalpage:
+          type: integer
+          format: int64       
+    PageableKeySort:
+      type: object
+      properties:
+        key:
+          type: string
+          description: ชื่อฟิลด์ที่จะเรียง
+        value:
+          type: integer
+    Pageable:
+      type: object
+      properties:
+        query:
+          type: string
+          description: คำค้นหา
+        page:
+          type: integer
+        limit:
+          type: integer
+        softs:
+          type: array
+          items:
+            $ref: "#/components/schemas/PageableKeySort"
+           
     Product:
       type: object
       properties:
@@ -877,6 +1032,26 @@ components:
       properties:
         payment:
           $ref: '#/components/schemas/Payment'
+    SyncStatus:
+      type: object
+      properties:
+        product:
+          type: string
+          format: date-time
+    ProductSyncResponse:
+      type: object
+      properties:
+        product:
+          type: object
+          properties: 
+            new:
+              type: array
+              items:
+                $ref: "#/components/schemas/Product"
+            remove:
+              type: array
+              items:
+                $ref: "#/components/schemas/Product"
   securitySchemes:
     bearer_token:      
       type: http
