@@ -11,6 +11,16 @@ tags:
   - name: Product Dealer
   - name: Transaction
     description: Sync transaction from SMLAccount
+  - name: Item Unit
+  - name: Item Brand
+  - name: Item Category
+  - name: Item Group Main
+  - name: Item Group Sub
+  - name: Item Class
+  - name: Item Pattern
+  - name: Item Design
+  - name: Item Grade
+  - name: Item Model
   - name: Master Sync
 servers:
   - url: '{protocal}://{server}/productdealerapi/v1'
@@ -208,6 +218,8 @@ paths:
           required: true
           schema:
             type: string
+      requestBody:
+        $ref: '#/components/requestBodies/Dealer'
       responses:
         "200":
           description: "Success"
@@ -251,6 +263,1348 @@ paths:
           description: "Bad request"
       security:
         - bearer_token: []      
+  /itemunit:
+    post:
+      tags:
+        - Item Unit
+      summary: Create new item unit
+      operationId: addItemUnit
+      description: "for add new item unit"
+      requestBody:
+        $ref: '#/components/requestBodies/ItemUnit'
+      responses:
+        "201":
+          $ref: "#/components/responses/201"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []          
+    get:
+      tags:
+        - Item Unit
+      operationId: listItemUnit
+      summary: List item unit
+      description: "for list all item unit."      
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                   - $ref: '#/components/schemas/ResponseSuccess'
+                properties:
+                  data:
+                    type: array
+                    description: Item unit
+                    items:
+                      $ref: '#/components/schemas/Unit'
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []
+  /itemunit/{code}:
+    get:
+      tags:
+        - Item Unit
+      operationId: getItemUnit
+      summary: Get item unit by code.
+      description: "for get item unit by code."
+      parameters:
+        - name: code
+          in: path
+          description: code of item unit to return
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                   - $ref: '#/components/schemas/ResponseSuccess'
+                properties:
+                  data:
+                    type: object
+                    $ref: '#/components/schemas/Unit'
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []          
+    put:
+      tags:
+        - Item Unit
+      operationId: updateItemUnit
+      summary: Update an existing item unit
+      description: "for add product sync to item unit"
+      parameters:
+        - name: code
+          in: path
+          description: code of product to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/ItemUnit'
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []
+    delete:
+      tags:
+        - Item Unit
+      operationId: deleteItemUnit
+      summary: Delete a item unit
+      description: "for add item unit"
+      parameters:
+        - name: code
+          in: path
+          description: code of item unit to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []
+  /itembrand:
+    post:
+      tags:
+        - Item Brand
+      summary: Create new item Brand
+      operationId: addItemBrand
+      description: "for add new item Brand"
+      requestBody:
+        $ref: '#/components/requestBodies/ItemBrand'
+      responses:
+        "201":
+          $ref: "#/components/responses/201"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []          
+    get:
+      tags:
+        - Item Brand
+      operationId: listItemBrand
+      summary: List item Brand
+      description: "for list all item Brand."      
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                   - $ref: "#/components/schemas/ResponseSuccess"
+                properties:
+                  data:
+                    type: array
+                    description: Item Brand
+                    items:
+                      $ref: "#/components/schemas/ItemBrand"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []
+  /itembrand/{code}:
+    get:
+      tags:
+        - Item Brand
+      operationId: getItemBrand
+      summary: Get item Brand by code.
+      description: "for get item Brand by code."
+      parameters:
+        - name: code
+          in: path
+          description: code of item Brand to return
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                   - $ref: "#/components/schemas/ResponseSuccess"
+                properties:
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/ItemBrand"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []          
+    put:
+      tags:
+        - Item Brand
+      operationId: updateItemBrand
+      summary: Update an existing item Brand
+      description: "for add product sync to item Brand"
+      parameters:
+        - name: code
+          in: path
+          description: code of product to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/ItemBrand'
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []
+    delete:
+      tags:
+        - Item Brand
+      operationId: deleteItemBrand
+      summary: Delete a item Brand
+      description: "for add item Brand"
+      parameters:
+        - name: code
+          in: path
+          description: code of item Brand to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []
+  /itemcategory:
+    post:
+      tags:
+        - Item Category
+      summary: Create new item category
+      operationId: addItemCategory
+      description: "for add new item category"
+      requestBody:
+        $ref: '#/components/requestBodies/ItemCategory'
+      responses:
+        "201":
+          $ref: "#/components/responses/201"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []          
+    get:
+      tags:
+        - Item Category
+      operationId: listItemCategory
+      summary: List item category
+      description: "for list all item category."      
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                   - $ref: "#/components/schemas/ResponseSuccess"
+                properties:
+                  data:
+                    type: array
+                    description: item category
+                    items:
+                      $ref: "#/components/schemas/ItemCategory"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []
+  /itemcategory/{code}:
+    get:
+      tags:
+        - Item Category
+      operationId: getItemCategory
+      summary: Get item category by code.
+      description: "for get item category by code."
+      parameters:
+        - name: code
+          in: path
+          description: code of item category to return
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                   - $ref: "#/components/schemas/ResponseSuccess"
+                properties:
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/ItemCategory"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []          
+    put:
+      tags:
+        - Item Category
+      operationId: updateItemCategory
+      summary: Update an existing item category
+      description: "for add product sync to item category"
+      parameters:
+        - name: code
+          in: path
+          description: code of product to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/ItemCategory'
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []
+    delete:
+      tags:
+        - Item Category
+      operationId: deleteItemCategory
+      summary: Delete a item category
+      description: "for add item category"
+      parameters:
+        - name: code
+          in: path
+          description: code of item category to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []
+  /itemgroupmain:
+    post:
+      tags:
+        - Item Group Main
+      summary: Create new item Group Main
+      operationId: addItemGroup Main
+      description: "for add new item Group Main"
+      requestBody:
+        $ref: '#/components/requestBodies/ItemGroupMain'
+      responses:
+        "201":
+          $ref: "#/components/responses/201"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []          
+    get:
+      tags:
+        - Item Group Main
+      operationId: listItemGroup Main
+      summary: List item Group Main
+      description: "for list all item Group Main."      
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                   - $ref: "#/components/schemas/ResponseSuccess"
+                properties:
+                  data:
+                    type: array
+                    description: Item Group Main
+                    items:
+                      $ref: "#/components/schemas/ItemGroupMain"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []
+  /itemgroupmain/{code}:
+    get:
+      tags:
+        - Item Group Main
+      operationId: getItemGroup Main
+      summary: Get item Group Main by code.
+      description: "for get item Group Main by code."
+      parameters:
+        - name: code
+          in: path
+          description: code of item Group Main to return
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                   - $ref: "#/components/schemas/ResponseSuccess"
+                properties:
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/ItemGroupMain"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []          
+    put:
+      tags:
+        - Item Group Main
+      operationId: updateItemGroup Main
+      summary: Update an existing item Group Main
+      description: "for add product sync to item Group Main"
+      parameters:
+        - name: code
+          in: path
+          description: code of product to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/ItemGroupMain'
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []
+    delete:
+      tags:
+        - Item Group Main
+      operationId: deleteItemGroup Main
+      summary: Delete a item Group Main
+      description: "for add item Group Main"
+      parameters:
+        - name: code
+          in: path
+          description: code of item Group Main to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []
+  /itemgroupsub:
+    post:
+      tags:
+        - Item Group Sub
+      summary: Create new item Group Sub
+      operationId: addItemGroup Sub
+      description: "for add new item Group Sub"
+      requestBody:
+        $ref: '#/components/requestBodies/ItemGroupSub'
+      responses:
+        "201":
+          $ref: "#/components/responses/201"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []          
+    get:
+      tags:
+        - Item Group Sub
+      operationId: listItemGroup Sub
+      summary: List item Group Sub
+      description: "for list all item Group Sub."      
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                   - $ref: "#/components/schemas/ResponseSuccess"
+                properties:
+                  data:
+                    type: array
+                    description: Item Group Sub
+                    items:
+                      $ref: "#/components/schemas/ItemGroupSub"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []
+  /itemgroupsub/{code}:
+    get:
+      tags:
+        - Item Group Sub
+      operationId: getItemGroup Sub
+      summary: Get item Group Sub by code.
+      description: "for get item Group Sub by code."
+      parameters:
+        - name: code
+          in: path
+          description: code of item Group Sub to return
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                   - $ref: "#/components/schemas/ResponseSuccess"
+                properties:
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/ItemGroupSub"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []          
+    put:
+      tags:
+        - Item Group Sub
+      operationId: updateItemGroup Sub
+      summary: Update an existing item Group Sub
+      description: "for add product sync to item Group Sub"
+      parameters:
+        - name: code
+          in: path
+          description: code of product to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/ItemGroupSub'
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []
+    delete:
+      tags:
+        - Item Group Sub
+      operationId: deleteItemGroup Sub
+      summary: Delete a item Group Sub
+      description: "for add item Group Sub"
+      parameters:
+        - name: code
+          in: path
+          description: code of item Group Sub to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []
+  /itemclass:
+    post:
+      tags:
+        - Item Class
+      summary: Create new item class
+      operationId: addItemClass
+      description: "for add new item class"
+      requestBody:
+        $ref: '#/components/requestBodies/ItemClass'
+      responses:
+        "201":
+          $ref: "#/components/responses/201"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []          
+    get:
+      tags:
+        - Item Class
+      operationId: listItemClass
+      summary: List item class
+      description: "for list all item class."      
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                   - $ref: "#/components/schemas/ResponseSuccess"
+                properties:
+                  data:
+                    type: array
+                    description: Item class
+                    items:
+                      $ref: "#/components/schemas/ItemClass"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []
+  /itemclass/{code}:
+    get:
+      tags:
+        - Item Class
+      operationId: getItemClass
+      summary: Get item class by code.
+      description: "for get item class by code."
+      parameters:
+        - name: code
+          in: path
+          description: code of item class to return
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                   - $ref: "#/components/schemas/ResponseSuccess"
+                properties:
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/ItemClass"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []          
+    put:
+      tags:
+        - Item Class
+      operationId: updateItemClass
+      summary: Update an existing item class
+      description: "for add product sync to item class"
+      parameters:
+        - name: code
+          in: path
+          description: code of product to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/ItemClass'
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []
+    delete:
+      tags:
+        - Item Class
+      operationId: deleteItemClass
+      summary: Delete a item class
+      description: "for add item class"
+      parameters:
+        - name: code
+          in: path
+          description: code of item class to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []
+  /itempattern:
+    post:
+      tags:
+        - Item Pattern
+      summary: Create new item pattern
+      operationId: addItemPattern
+      description: "for add new item pattern"
+      requestBody:
+        $ref: '#/components/requestBodies/ItemPattern'
+      responses:
+        "201":
+          $ref: "#/components/responses/201"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []          
+    get:
+      tags:
+        - Item Pattern
+      operationId: listItemPattern
+      summary: List item pattern
+      description: "for list all item pattern."      
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                   - $ref: "#/components/schemas/ResponseSuccess"
+                properties:
+                  data:
+                    type: array
+                    description: Item pattern
+                    items:
+                      $ref: "#/components/schemas/ItemPattern"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []
+  /itempattern/{code}:
+    get:
+      tags:
+        - Item Pattern
+      operationId: getItemPattern
+      summary: Get item pattern by code.
+      description: "for get item pattern by code."
+      parameters:
+        - name: code
+          in: path
+          description: code of item pattern to return
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                   - $ref: "#/components/schemas/ResponseSuccess"
+                properties:
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/ItemPattern"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []          
+    put:
+      tags:
+        - Item Pattern
+      operationId: updateItemPattern
+      summary: Update an existing item pattern
+      description: "for add product sync to item pattern"
+      parameters:
+        - name: code
+          in: path
+          description: code of product to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/ItemPattern'
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []
+    delete:
+      tags:
+        - Item Pattern
+      operationId: deleteItemPattern
+      summary: Delete a item pattern
+      description: "for add item pattern"
+      parameters:
+        - name: code
+          in: path
+          description: code of item pattern to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []
+  /itemdesign:
+    post:
+      tags:
+        - Item Design
+      summary: Create new item design
+      operationId: addItemDesign
+      description: "for add new item design"
+      requestBody:
+        $ref: '#/components/requestBodies/ItemDesign'
+      responses:
+        "201":
+          $ref: "#/components/responses/201"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []          
+    get:
+      tags:
+        - Item Design
+      operationId: listItemDesign
+      summary: List item design
+      description: "for list all item design."      
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                   - $ref: "#/components/schemas/ResponseSuccess"
+                properties:
+                  data:
+                    type: array
+                    description: Item design
+                    items:
+                      $ref: "#/components/schemas/ItemDesign"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []
+  /itemdesign/{code}:
+    get:
+      tags:
+        - Item Design
+      operationId: getItemDesign
+      summary: Get item design by code.
+      description: "for get item design by code."
+      parameters:
+        - name: code
+          in: path
+          description: code of item design to return
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                   - $ref: "#/components/schemas/ResponseSuccess"
+                properties:
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/ItemDesign"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []          
+    put:
+      tags:
+        - Item Design
+      operationId: updateItemDesign
+      summary: Update an existing item design
+      description: "for add product sync to item design"
+      parameters:
+        - name: code
+          in: path
+          description: code of product to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/ItemDesign'
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []
+    delete:
+      tags:
+        - Item Design
+      operationId: deleteItemDesign
+      summary: Delete a item design
+      description: "for add item design"
+      parameters:
+        - name: code
+          in: path
+          description: code of item design to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []
+  /itemgrade:
+    post:
+      tags:
+        - Item Grade
+      summary: Create new item grade
+      operationId: addItemGrade
+      description: "for add new item grade"
+      requestBody:
+        $ref: '#/components/requestBodies/ItemGrade'
+      responses:
+        "201":
+          $ref: "#/components/responses/201"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []          
+    get:
+      tags:
+        - Item Grade
+      operationId: listItemGrade
+      summary: List item grade
+      description: "for list all item grade."      
+      responses:
+        "200":
+          description: List of item model
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                   - $ref: "#/components/schemas/ResponseSuccess"
+                properties:
+                  data:
+                    type: array
+                    description: Item grade
+                    items:
+                      $ref: "#/components/schemas/ItemGrade"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []
+  /itemgrade/{code}:
+    get:
+      tags:
+        - Item Grade
+      operationId: getItemGrade
+      summary: Get item grade by code.
+      description: "for get item grade by code."
+      parameters:
+        - name: code
+          in: path
+          description: code of item grade to return
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                   - $ref: "#/components/schemas/ResponseSuccess"
+                properties:
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/ItemGrade"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []          
+    put:
+      tags:
+        - Item Grade
+      operationId: updateItemGrade
+      summary: Update an existing item grade
+      description: "for add product sync to item grade"
+      parameters:
+        - name: code
+          in: path
+          description: code of grade to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/ItemGrade'
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []
+    delete:
+      tags:
+        - Item Grade
+      operationId: deleteItemGrade
+      summary: Delete a item grade
+      description: "for add item grade"
+      parameters:
+        - name: code
+          in: path
+          description: code of item grade to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []
+  /itemmodel:
+    post:
+      tags:
+        - Item Model
+      summary: Create new item model
+      operationId: addItemModel
+      description: "for add new item model"
+      requestBody:
+        $ref: '#/components/requestBodies/ItemModel'
+      responses:
+        "201":
+          $ref: "#/components/responses/201"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []          
+    get:
+      tags:
+        - Item Model
+      operationId: listItemModel
+      summary: List item model
+      description: "for list all item model."      
+      responses:
+        "200":
+          description: List of item model
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                   - $ref: "#/components/schemas/ResponseSuccess"
+                properties:
+                  data:
+                    type: array
+                    description: Item model
+                    items:
+                      $ref: "#/components/schemas/ItemModel"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []
+  /itemmodel/{code}:
+    get:
+      tags:
+        - Item Model
+      operationId: getItemModel
+      summary: Get item model by code.
+      description: "for get item model by code."
+      parameters:
+        - name: code
+          in: path
+          description: code of item model to return
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                   - $ref: "#/components/schemas/ResponseSuccess"
+                properties:
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/ItemModel"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []          
+    put:
+      tags:
+        - Item Model
+      operationId: updateItemModel
+      summary: Update an existing item model
+      description: "for add product sync to item model"
+      parameters:
+        - name: code
+          in: path
+          description: code of product to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/ItemModel'
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      security:
+        - bearer_token: []
+    delete:
+      tags:
+        - Item Model
+      operationId: deleteItemModel
+      summary: Delete a item model
+      description: "for add item model"
+      parameters:
+        - name: code
+          in: path
+          description: code of item model to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+
+      security:
+        - bearer_token: []
+  
   /saleinvoice:
     post:
       tags:
@@ -355,6 +1709,7 @@ paths:
         - Master Sync
       operationId: getMasterSync
       summary: Get master sync
+      description: Get master
       parameters:
         - name: lastupdate
           in: query
@@ -369,6 +1724,8 @@ paths:
           required: false
           schema:
             type: string
+      security:
+        - api_key_dealer: []
       responses:
         "200":
           description: "Success"
@@ -379,7 +1736,7 @@ paths:
                   - $ref: "#/components/schemas/ResponseSuccess"
                 properties:
                   data:
-                    $ref: "#/components/schemas/ProductSyncResponse"
+                    $ref: "#/components/schemas/SyncDataResponse"
                   pagination:
                     $ref: "#/components/schemas/Pagination"
         "400":
@@ -394,6 +1751,8 @@ paths:
         - Master Sync
       operationId: statusMasterSync
       summary: Get master sync status
+      security:
+        - api_key_dealer: []
       responses:
         "200":
           description: "Success"
@@ -427,6 +1786,8 @@ paths:
           required: false
           schema:
             type: string
+      security:
+        - api_key_dealer: []
       responses:
         "200":
           description: "Success"
@@ -437,7 +1798,7 @@ paths:
                   - $ref: "#/components/schemas/ResponseSuccess"
                 properties:
                   data:
-                    $ref: "#/components/schemas/ProductSyncResponse"
+                    $ref: "#/components/schemas/SyncDataResponse"
                   pagination:
                     $ref: "#/components/schemas/Pagination"
         "400":
@@ -489,6 +1850,56 @@ components:
             type: array
             items:
               $ref: "#/components/schemas/ProductDealer"
+    ItemUnit:
+      content:
+         application/json:
+          schema:
+            $ref: "#/components/schemas/Unit"
+    ItemBrand:
+      content:
+         application/json:
+          schema:
+            $ref: "#/components/schemas/ItemBrand"
+    ItemCategory:
+      content:
+         application/json:
+          schema:
+            $ref: "#/components/schemas/ItemCategory"
+    ItemGroupMain:
+      content:
+         application/json:
+          schema:
+            $ref: "#/components/schemas/ItemGroupMain"
+    ItemGroupSub:
+      content:
+         application/json:
+          schema:
+            $ref: "#/components/schemas/ItemGroupSub"
+    ItemDesign:
+      content:
+         application/json:
+          schema:
+            $ref: "#/components/schemas/ItemDesign"
+    ItemClass:
+      content:
+         application/json:
+          schema:
+            $ref: "#/components/schemas/ItemClass"
+    ItemPattern:
+      content:
+         application/json:
+          schema:
+            $ref: "#/components/schemas/ItemPattern"
+    ItemGrade:
+      content:
+         application/json:
+          schema:
+            $ref: "#/components/schemas/ItemGrade"
+    ItemModel:
+      content:
+         application/json:
+          schema:
+            $ref: "#/components/schemas/ItemModel"
     SaleInvoice:
       content:
         application/json:
@@ -525,6 +1936,15 @@ components:
           schema:
             $ref: "#/components/schemas/Transaction"
   responses:
+    '200':
+      description: Created success
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiResponse"
+          example:
+            message: success
+            success: true
     '201':
       description: Created success
       content:
@@ -621,7 +2041,6 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/PageableKeySort"
-           
     Product:
       type: object
       properties:
@@ -831,15 +2250,15 @@ components:
         code:
           type: string
           maxLength: 25
-          description: ขนาดสินค้า
+          description: รหัสหน่วยนับ
         name_1:
           type: string
-          maxLength: 25
-          description: ขนาดสินค้า
+          maxLength: 255
+          description: ชื่อหน่วยนับ
         name_eng_1:
           type: string
-          maxLength: 25
-          description: ขนาดสินค้า
+          maxLength: 255
+          description: ชื่อหน่วยนับ(อังกฤษ)
     ProductDealer:
       type: object
       properties:
@@ -1038,7 +2457,172 @@ components:
         product:
           type: string
           format: date-time
-    ProductSyncResponse:
+        unit:
+          type: string
+          format: date-time
+        itembrand:
+          type: string
+          format: date-time
+        itemcategory:
+          type: string
+          format: date-time
+        itemgroupmain:
+          type: string
+          format: date-time
+        itemgroupsub:
+          type: string
+          format: date-time
+        itemclass:
+          type: string
+          format: date-time
+        itempattern:
+          type: string
+          format: date-time
+        itemdesign:
+          type: string
+          format: date-time
+        itemgrade:
+          type: string
+          format: date-time
+        itemmodel:
+          type: string
+          format: date-time
+    ItemBrand:
+      type: object
+      properties:
+        code:
+          type: string
+          maxLength: 25
+          description: รหัส
+        name_1:
+          type: string
+          maxLength: 255
+          description: ชื่อ
+        name_eng_1:
+          type: string
+          maxLength: 255
+          description: ชื่อ(อังกฤษ)
+    ItemCategory:
+      type: object
+      properties:
+        code:
+          type: string
+          maxLength: 25
+          description: รหัส
+        name_1:
+          type: string
+          maxLength: 255
+          description: ชื่อ
+        name_eng_1:
+          type: string
+          maxLength: 255
+          description: ชื่อ(อังกฤษ)
+    ItemGroupMain:
+      type: object
+      properties:
+        code:
+          type: string
+          maxLength: 25
+          description: รหัส
+        name_1:
+          type: string
+          maxLength: 255
+          description: ชื่อ
+        name_eng_1:
+          type: string
+          maxLength: 255
+          description: ชื่อ(อังกฤษ)
+    ItemGroupSub:
+      type: object
+      properties:
+        code:
+          type: string
+          maxLength: 25
+          description: รหัส
+        name_1:
+          type: string
+          maxLength: 255
+          description: ชื่อ
+        name_eng_1:
+          type: string
+          maxLength: 255
+          description: ชื่อ(อังกฤษ)
+    ItemClass:
+      type: object
+      properties:
+        code:
+          type: string
+          maxLength: 25
+          description: รหัส
+        name_1:
+          type: string
+          maxLength: 255
+          description: ชื่อ
+        name_eng_1:
+          type: string
+          maxLength: 255
+          description: ชื่อ(อังกฤษ)
+    ItemPattern:
+      type: object
+      properties:
+        code:
+          type: string
+          maxLength: 25
+          description: รหัส
+        name_1:
+          type: string
+          maxLength: 255
+          description: ชื่อ
+        name_eng_1:
+          type: string
+          maxLength: 255
+          description: ชื่อ(อังกฤษ)
+    ItemDesign:
+      type: object
+      properties:
+        code:
+          type: string
+          maxLength: 25
+          description: รหัส
+        name_1:
+          type: string
+          maxLength: 255
+          description: ชื่อ
+        name_eng_1:
+          type: string
+          maxLength: 255
+          description: ชื่อ(อังกฤษ)
+    ItemGrade:
+      type: object
+      properties:
+        code:
+          type: string
+          maxLength: 25
+          description: รหัส
+        name_1:
+          type: string
+          maxLength: 255
+          description: ชื่อ
+        name_eng_1:
+          type: string
+          maxLength: 255
+          description: ชื่อ(อังกฤษ)
+    ItemModel:
+      type: object
+      properties:
+        code:
+          type: string
+          maxLength: 25
+          description: รหัส
+        name_1:
+          type: string
+          maxLength: 255
+          description: ชื่อ
+        name_eng_1:
+          type: string
+          maxLength: 255
+          description: ชื่อ(อังกฤษ)
+    SyncDataResponse:
       type: object
       properties:
         product:
@@ -1052,6 +2636,116 @@ components:
               type: array
               items:
                 $ref: "#/components/schemas/Product"
+        unit:
+          type: object
+          properties: 
+            new:
+              type: array
+              items:
+                $ref: "#/components/schemas/Unit"
+            remove:
+              type: array
+              items:
+                $ref: "#/components/schemas/Unit"
+        itembrand:
+          type: object
+          properties: 
+            new:
+              type: array
+              items:
+                $ref: "#/components/schemas/ItemBrand"
+            remove:
+              type: array
+              items:
+                $ref: "#/components/schemas/ItemBrand"
+        itemcategory:
+          type: object
+          properties: 
+            new:
+              type: array
+              items:
+                $ref: "#/components/schemas/ItemCategory"
+            remove:
+              type: array
+              items:
+                $ref: "#/components/schemas/ItemCategory"
+        itemgroupmain:
+          type: object
+          properties: 
+            new:
+              type: array
+              items:
+                $ref: "#/components/schemas/ItemGroupMain"
+            remove:
+              type: array
+              items:
+                $ref: "#/components/schemas/ItemGroupMain"
+        itemgroupsub:
+          type: object
+          properties: 
+            new:
+              type: array
+              items:
+                $ref: "#/components/schemas/ItemGroupSub"
+            remove:
+              type: array
+              items:
+                $ref: "#/components/schemas/ItemGroupSub"
+        itemclass:
+          type: object
+          properties: 
+            new:
+              type: array
+              items:
+                $ref: "#/components/schemas/ItemClass"
+            remove:
+              type: array
+              items:
+                $ref: "#/components/schemas/ItemClass"
+        itempattern:
+          type: object
+          properties: 
+            new:
+              type: array
+              items:
+                $ref: "#/components/schemas/ItemPattern"
+            remove:
+              type: array
+              items:
+                $ref: "#/components/schemas/ItemPattern"
+        itemdesign:
+          type: object
+          properties: 
+            new:
+              type: array
+              items:
+                $ref: "#/components/schemas/ItemDesign"
+            remove:
+              type: array
+              items:
+                $ref: "#/components/schemas/ItemDesign"
+        itemgrade:
+          type: object
+          properties: 
+            new:
+              type: array
+              items:
+                $ref: "#/components/schemas/ItemGrade"
+            remove:
+              type: array
+              items:
+                $ref: "#/components/schemas/ItemGrade"
+        itemmodel:
+          type: object
+          properties: 
+            new:
+              type: array
+              items:
+                $ref: "#/components/schemas/ItemModel"
+            remove:
+              type: array
+              items:
+                $ref: "#/components/schemas/ItemModel"
   securitySchemes:
     bearer_token:      
       type: http
@@ -1060,5 +2754,9 @@ components:
     api_key:
       type: apiKey
       name: x-api-key
+      in: header
+    api_key_dealer:
+      type: apiKey
+      name: x-shop-api-key
       in: header
         
