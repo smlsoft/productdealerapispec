@@ -1822,7 +1822,8 @@ paths:
           $ref: "#/components/responses/201"
         "400":
           $ref: "#/components/responses/400"
-
+      security:
+          - bearer_token: []    
 components:
   requestBodies:
     Product:
