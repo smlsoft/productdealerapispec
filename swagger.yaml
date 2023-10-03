@@ -22,6 +22,7 @@ tags:
   - name: Item Grade
   - name: Item Model
   - name: Master Sync
+  - name: Stock Dealer
 servers:
   - url: '{protocal}://{server}/productdealerapi/v1'
     variables:
@@ -1807,6 +1808,21 @@ paths:
           $ref: "#/components/responses/401"
         "500":
           $ref: "#/components/responses/500"
+  /stockdealer:
+    post:
+      tags:
+        - Stock Dealer
+      operationId: syncStockDealer
+      summary: Sync stock dealer
+      description: Sync stock dealer
+      requestBody:
+        $ref: '#/components/requestBodies/StockDealer'
+      responses:
+        "201":
+          $ref: "#/components/responses/201"
+        "400":
+          $ref: "#/components/responses/400"
+
 components:
   requestBodies:
     Product:
@@ -1935,6 +1951,12 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/Transaction"
+    StockDealer:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/StockDealer"
+    
   responses:
     '200':
       description: Created success
@@ -2746,6 +2768,28 @@ components:
               type: array
               items:
                 $ref: "#/components/schemas/ItemModel"
+    StockDealer:
+      type: object
+      properties:
+        code:
+          type: string
+          description: รหัสสินค้า
+          maxLength: 25
+        name_1:
+          type: string
+          description: ชื่อสินค้า
+          maxLength: 255
+        unit_cost:
+          type: string
+          description: รหัสหน่วยนับ(ต้นทุน)
+          maxLength: 25
+        balance_qty:
+          type: number
+          description: จำนวนคงเหลือ
+        dealercode:
+          type: string
+          maxLength: 25
+          description: รหัสตัวแทนจำหน่าย
   securitySchemes:
     bearer_token:      
       type: http
