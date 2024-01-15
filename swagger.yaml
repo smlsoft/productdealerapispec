@@ -1604,8 +1604,7 @@ paths:
           $ref: "#/components/responses/500"
 
       security:
-        - bearer_token: []
-  
+        - bearer_token: []  
   /saleinvoice:
     post:
       tags:
@@ -2404,7 +2403,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TransferPayment'
-        chequqdetail:
+        chequedetail:
           type: array
           items:
             $ref: '#/components/schemas/ChequePayment'
@@ -2787,7 +2786,7 @@ components:
         balance_qty:
           type: number
           description: จำนวนคงเหลือ
-        dealercode:
+        dealer_code:
           type: string
           maxLength: 25
           description: รหัสตัวแทนจำหน่าย
