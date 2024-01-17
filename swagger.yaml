@@ -2320,6 +2320,25 @@ components:
         taxdocdate:
           type: string
           format: date
+        docdatestr:
+          type: string
+        docdatewithtimezone:
+          type: string
+          format: date
+          description: วันที่เอกสาร(รวมเวลาตาม Timezone)
+        docdatewithouttimezone:
+          type: string
+          format: date
+          description: วันที่เอกสาร(ไม่รวมเวลาตาม Timezone)
+        taxdocdatestr:
+          type: string
+          description: วันที่ใบกำกับ(ข้อความ)
+        timezone:
+          type: string
+          description: Timezone (+-?)
+        timelocation:
+          type: string
+          description: Location (Asia/Bangkok)
         custcode:
           type: string
         custname:
